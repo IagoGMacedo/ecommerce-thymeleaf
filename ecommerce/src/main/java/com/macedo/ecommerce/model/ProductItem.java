@@ -1,5 +1,6 @@
 package com.macedo.ecommerce.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,10 +21,19 @@ public class ProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product produto;
+
+    @Column
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private ShoppingCart shoppingCart;
+    @JoinColumn(name = "shoppingCart_id")
+    private ShoppingCart shoppingCart; //produto está no carrinho
+
+    @ManyToOne
+    @JoinColumn(name = "purchase_id") //produto foi comprado
+    private Purchase purchase;
 }
