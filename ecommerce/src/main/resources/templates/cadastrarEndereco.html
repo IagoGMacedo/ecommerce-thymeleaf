@@ -13,49 +13,38 @@
 </head>
 
 <body>
-    <div class="d-flex justify-content-center align-items-center mt-5">
-
-
-        <div class="card">
-
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item text-center">
-                    <a class="nav-link active btl" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
-                        aria-controls="pills-home" aria-selected="true">Cadastrar endereço</a>
-                </li>
-
-
-            </ul>
-            <div class="tab-content" id="pills-tabContent">
-                <!-- login -->
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
-                    <div class="form px-4 pt-5">
-                        <form action="#" th:action="@{'/user/terminarCadastro/'+${user.id}}" th:object="${user}" method="post">
-                            <input type="number" th:field="*{address.cep}" class="form-control" placeholder="Cep">
-                            <input type="text" th:field="*{address.completeAddress}" class="form-control" placeholder="Senha">
-                            <input type="number" th:field="*{address.number}" class="form-control" placeholder="Número">
-                            <input type="text" th:field="*{address.complement}" class="form-control" placeholder="Complemento">
-                            <input type="text" th:field="*{address.district}" class="form-control" placeholder="Bairro">
-                            <input type="text" th:field="*{address.city}" class="form-control" placeholder="Cidade">
-                            <input type="text" th:field="*{address.state}" class="form-control" placeholder="Estado">
-
-                            <button class="btn btn-dark btn-block">Cadastrar</button>
-                        </form>
-
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item text-center">
+                                <a class="nav-link active btl" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Cadastrar endereço</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <!-- login -->
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <form action="#" th:action="@{'/user/terminarCadastro/'+${user.id}}" th:object="${address}" method="post">
+                                    <input type="text" th:field="*{cep}" class="form-control mb-3" placeholder="Cep">
+                                    <input type="text" th:field="*{completeAddress}" class="form-control mb-3" placeholder="Endereço">
+                                    <input type="text" th:field="*{number}" class="form-control mb-3" placeholder="Número">
+                                    <input type="text" th:field="*{complement}" class="form-control mb-3" placeholder="Complemento">
+                                    <input type="text" th:field="*{district}" class="form-control mb-3" placeholder="Bairro">
+                                    <input type="text" th:field="*{city}" class="form-control mb-3" placeholder="Cidade">
+                                    <input type="text" th:field="*{state}" class="form-control mb-3" placeholder="Estado">
+        
+                                    <button class="btn btn-dark btn-block">Cadastrar</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-
             </div>
-
-
-
-
         </div>
-
-
     </div>
+    
 </body>
 
 </html>

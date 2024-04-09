@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.macedo.ecommerce.model.Address;
+import com.macedo.ecommerce.model.Role;
 import com.macedo.ecommerce.model.User;
+import com.macedo.ecommerce.service.AddressService;
 import com.macedo.ecommerce.service.UserService;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +25,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AddressService addressService;
+
     
     
 
@@ -36,7 +41,13 @@ public class UserController {
 
         if(userFind != null && userFind.getPassword().equals(user.getPassword())){
             model.addAttribute("user", userFind);
-            return "homeLogin.html";
+            return "vitrine.html";
+            /* 
+            if(userFind.getRole() == Role.ADMIN)
+                return "homeAdmin.html";
+            */
+
+        //return "home.html";
         }
             
         return "home.html";
@@ -55,7 +66,10 @@ public class UserController {
         && !user.getEmail().isEmpty()){
             userService.saveUser(user);
             model.addAttribute("user", user);
-            return "cadastrarEndereco.html";
+            model.addAttribute("address", new Address());
+            //return "cadastrarEndereco.html";
+            
+            return "redirect:/product/getListaProducts";
         }
 
 
@@ -69,8 +83,10 @@ public class UserController {
         System.out.println("minha cidade: " +address.getCity());
         User usuarioFind = userService.getUserById(id);
         if(usuarioFind != null){
-            usuarioFind.setAddress(address);
-            userService.updateUser(usuarioFind);
+            address.setId(usuarioFind.getAddress().getId());
+            addressService.updateAddress(address);
+
+
             model.addAttribute("user", usuarioFind);
             return "vitrine.html";
         }
