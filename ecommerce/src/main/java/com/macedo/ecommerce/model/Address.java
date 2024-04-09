@@ -29,7 +29,7 @@ public class Address {
     @Column
     private String cep;
     @Column
-    private String Address; //endereco
+    private String completeAddress; //endereco
     @Column
     private String number;
     @Column
@@ -37,9 +37,9 @@ public class Address {
     @Column
     private String district; //bairro
     @Column
-    private String cidade;
+    private String city;
     @Column
-    private String estado; 
+    private String state; 
 
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private User user;

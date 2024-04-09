@@ -26,7 +26,7 @@ public class ShoppingCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     
     @OneToMany(mappedBy = "shoppingCart", fetch = FetchType.LAZY)
     private List<ProductItem> productItems;

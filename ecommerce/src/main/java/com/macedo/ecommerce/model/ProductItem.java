@@ -20,11 +20,11 @@ import lombok.NoArgsConstructor;
 public class ProductItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product produto;
+    private Product product;
 
     @Column
     private int quantity;
