@@ -2,6 +2,7 @@ package com.macedo.ecommerce.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,7 +29,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @OneToMany(mappedBy = "shoppingCart", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shoppingCart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductItem> productItems;
 
     @Column
@@ -36,4 +37,12 @@ public class ShoppingCart {
 
     @OneToOne(mappedBy = "shoppingCart", fetch = FetchType.LAZY)
     private User user;
+
+    public BigDecimal getTotalPrice(){
+        BigDecimal totalValue = BigDecimal.ZERO;
+        for (ProductItem products : productItems) {
+            totalValue.add(products.getTotalItemPrice());
+        }
+        return totalValue;
+    }
 }

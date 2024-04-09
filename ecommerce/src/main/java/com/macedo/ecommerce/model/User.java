@@ -51,10 +51,10 @@ public class User {
     @JoinColumn(name = "shoppingCart_id")
     private ShoppingCart shoppingCart;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CreditCard> creditCards;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Purchase> purchases;
 
     

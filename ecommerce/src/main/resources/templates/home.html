@@ -50,6 +50,13 @@
 
                         <input type="password" th:field="*{password}" class="form-control" placeholder="Senha">
 
+                        <select th:field="*{role}" class="form-control mb-3">
+                          <option th:each="roleItem : ${T(com.macedo.ecommerce.model.Role).values()}"
+                                  th:value="${roleItem}"
+                                  th:text="${roleItem}">
+                          </option>
+                      </select>
+
                         <button class="btn btn-dark btn-block">Registrar</button>
                     </form>
                     

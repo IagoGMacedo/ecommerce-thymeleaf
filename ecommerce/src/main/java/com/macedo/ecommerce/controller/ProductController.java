@@ -3,7 +3,6 @@ package com.macedo.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.macedo.ecommerce.model.Category;
 import com.macedo.ecommerce.model.Product;
+import com.macedo.ecommerce.model.User;
 import com.macedo.ecommerce.service.ProductService;
+import com.macedo.ecommerce.service.UserService;
 
 @Controller
 @RequestMapping("/product")
@@ -20,7 +21,10 @@ public class ProductController {
 
 
     @Autowired
-    ProductService productService;    
+    ProductService productService;  
+    
+    @Autowired
+    UserService userService;  
 
 
     @RequestMapping("/showForm")
@@ -39,14 +43,31 @@ public class ProductController {
         Model model){
         productService.saveProduct(product);
         model.addAttribute("product", product);
-        return "redirect:/product/getListaProducts";
+        return "redirect:/product/getListaProductsAdmin";
     }
 
-    @RequestMapping("/getListaProducts")
-    public String showListaProduct(Model model){
+    @RequestMapping("/getListaProductsAdmin")
+    public String showListaProductAdmin(Model model){
         List<Product> products = productService.getProducts();
         model.addAttribute("products",products);
-        return "product/listaProducts";
+        return "product/listaProductsAdmin";
+    }
+
+    @RequestMapping("/getListaProductsUser/{id}")
+    public String showListaProductUser(@PathVariable("id") Integer userId,Model model){
+        List<Product> products = productService.getProducts();
+        model.addAttribute("products",products);
+        User user = userService.getUserById(userId);
+        if(user != null){
+            System.out.println("consegui pegar usuario");
+            System.out.println(user.getName());
+            model.addAttribute("user",user);
+            model.addAttribute("quantityShoppingCart", user.getShoppingCart().getProductItems().size());
+            return "product/listaProductsUser";
+        }
+        return "home";
+
+
     }
 
     @RequestMapping("/deleteProduct/{id}")
@@ -54,6 +75,6 @@ public class ProductController {
         Product deleteProduct = productService.getProductById(id);
         if(deleteProduct != null)
             productService.deleteProduct(deleteProduct);
-        return "redirect:/product/getListaProducts";
+        return "redirect:/product/getListaProductsAdmin";
     }
 }

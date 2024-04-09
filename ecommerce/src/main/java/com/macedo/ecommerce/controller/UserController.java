@@ -12,8 +12,6 @@ import com.macedo.ecommerce.service.UserService;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 
@@ -41,11 +39,12 @@ public class UserController {
 
         if(userFind != null && userFind.getPassword().equals(user.getPassword())){
             model.addAttribute("user", userFind);
-            return "vitrine.html";
-            /* 
-            if(userFind.getRole() == Role.ADMIN)
-                return "homeAdmin.html";
-            */
+            
+            if(userFind.getRole() == Role.USER)
+                return "redirect:/product/getListaProductsUser/"+userFind.getId();
+
+                return "redirect:/product/getListaProductsAdmin";
+            
 
         //return "home.html";
         }
@@ -67,12 +66,11 @@ public class UserController {
             userService.saveUser(user);
             model.addAttribute("user", user);
             model.addAttribute("address", new Address());
-            //return "cadastrarEndereco.html";
+            if(user.getRole()==Role.USER)
+                return "cadastrarEndereco.html"; //cadastrar endereço
             
-            return "redirect:/product/getListaProducts";
+            return "redirect:/product/getListaProductsAdmin"; //cadastrar produtos
         }
-
-
         return "home.html";
     }
 
@@ -88,7 +86,7 @@ public class UserController {
 
 
             model.addAttribute("user", usuarioFind);
-            return "vitrine.html";
+            return "redirect:/product/getListaProductsUser/"+usuarioFind.getId();
         }
         return "home.html";
     }

@@ -1,5 +1,7 @@
 package com.macedo.ecommerce.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,4 +38,8 @@ public class ProductItem {
     @ManyToOne
     @JoinColumn(name = "purchase_id") //produto foi comprado
     private Purchase purchase;
+
+    public BigDecimal getTotalItemPrice(){
+        return product.getPrice().multiply(new BigDecimal(quantity));
+    }
 }

@@ -1,6 +1,7 @@
 package com.macedo.ecommerce.service;
 
 import java.util.List;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.macedo.ecommerce.model.Address;
 import com.macedo.ecommerce.model.CreditCard;
+import com.macedo.ecommerce.model.ProductItem;
 import com.macedo.ecommerce.model.Purchase;
 import com.macedo.ecommerce.model.Role;
 import com.macedo.ecommerce.model.ShoppingCart;
@@ -33,12 +35,13 @@ public class UserService {
     public void saveUser(User User){
         //inicializando variáveis para evitar erros
 
-        //não sei o que precisa ou o que não precisa inicializar aqui
-        User.setRole(Role.USER);
         User.setAddress(new Address());
         User.setCreditCards(new ArrayList<CreditCard>());
         User.setPurchases(new ArrayList<Purchase>());
-        User.setShoppingCart(new ShoppingCart());
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setTotalPrice(BigDecimal.ZERO);
+        shoppingCart.setProductItems(new ArrayList<ProductItem>());
+        User.setShoppingCart(shoppingCart);
 
 
 
